@@ -18,7 +18,7 @@ CREATED = ["version", "changeset", "timestamp", "user", "uid"]
 def shape_element(element):
 
     # helper function to create and append to dict
-    def append_to_dict(term, k, node):
+    def append_to_dict(term, k, v, node):
         items = k.split(":")
 
         if term not in node:
@@ -47,23 +47,24 @@ def shape_element(element):
         for child in element:
             if child.tag == 'tag':
                 k = child.attrib["k"]
+                v = child.attrib["v"]
 
                 if re.search(problemchars, k):
                     pass
                 elif k[:4] == "addr":
-                    append_to_dict("addr", k, node)
+                    append_to_dict("addr", k, v, node)
                 elif k[:4] == "gnis":
-                    append_to_dict("gnis", k, node)
+                    append_to_dict("gnis", k, v, node)
                 elif k[:6] == "source":
-                    append_to_dict("source", k, node)
+                    append_to_dict("source", k, v, node)
                 elif k[:5] == "tiger":
-                    append_to_dict("tiger", k, node)
+                    append_to_dict("tiger", k, v, node)
                 elif k[:8] == "nycdoitt":
-                    append_to_dict("nycdoitt", k, node)
+                    append_to_dict("nycdoitt", k, v, node)
                 elif k[:8] == "building":
-                    append_to_dict("building", k, node)
+                    append_to_dict("building", k, v, node)
                 elif k[:4] == "roof":
-                    append_to_dict("roof", k, node)
+                    append_to_dict("roof", k, v, node)
                 else:
                     node[k] = v
             elif child.tag == "nd":
