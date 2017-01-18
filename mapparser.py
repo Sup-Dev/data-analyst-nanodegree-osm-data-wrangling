@@ -20,19 +20,6 @@ def count_tags(filename):
     return tag_dict
 
 
-def test():
-
+if __name__ == "__main__":
     tags = count_tags('sample.osm')
     pprint.pprint(tags)
-    assert tags == {'bounds': 1,
-                    'member': 3,
-                    'nd': 4,
-                    'node': 20,
-                    'osm': 1,
-                    'relation': 1,
-                    'tag': 7,
-                    'way': 1}
-
-
-if __name__ == "__main__":
-    test()
