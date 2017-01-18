@@ -25,7 +25,36 @@ def shape_element(element):
             node[term] = dict()
 
         if len(items) == 2:
-            node[term][items[1]] = v
+            if items[1] == "postcode":
+                node[term][items[1]] = clean_postcode(v)
+            elif items[1] == "street":
+                node[term][items[1]] = clean_street(v)
+            else:
+                node[term][items[1]] = v
+
+    # helper function to clean postcode
+    def clean_postcode(postcode):
+        """Corrects postcodes starting with 'NY' or having a '-'"""
+        if postcode[:2] == 'NY':
+            cleaned_data = postcode[2:].strip()
+        elif '-' in postcode:
+            cleaned_data = postcode.split('-')[0]
+
+        return cleaned_data
+
+    # helper function to clean street address
+    def clean_street(street):
+        """Corrects street address having abbreviations having 'St', 'St.', 'Ave.' and 'Pky'"""
+        if street[-2:] == "St":
+            cleaned_data = street + "reet"
+        elif street[:3] == "St.":
+            cleaned_data = "Street" + street[4:]
+        elif street[-4:] == "Ave.":
+            cleaned_data = street[:-1] + "nue"
+        elif street[-3:] == "Pky":
+            cleaned_data = street[:-3] + "Parkway"
+
+        return cleaned_data
 
     node = {}
     if element.tag == "node" or element.tag == "way":
